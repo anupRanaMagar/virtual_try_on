@@ -15,6 +15,41 @@
       "when": 1738919058342,
       "tag": "0001_equal_whizzer",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1740938599897,
+      "tag": "0002_whole_psynapse",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1740938728567,
+      "tag": "0003_lying_wendell_rand",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1740940349581,
+      "tag": "0004_legal_penance",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1740941048995,
+      "tag": "0005_marvelous_major_mapleleaf",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1740949020962,
+      "tag": "0006_easy_thunderbolt",
+      "breakpoints": true
     }
   ]
 }

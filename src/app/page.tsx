@@ -1,11 +1,21 @@
+import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
-const Page = () => {
+const Page = async () => {
+  const session = await auth();
   return (
     <div className="my-24 flex justify-center">
-      <div className="flex items-center w-11/12 h-full gap-8">
-        {/* Left Side - Text */}
+      {JSON.stringify(session)}
+      <form
+        action={async () => {
+          "use server";
+          await signOut();
+        }}
+      >
+        <Button type="submit">Sign Out</Button>
+      </form>
+      {/* <div className="flex items-center w-11/12 h-full gap-8">
+        
         <div>
           <div className="w-1/2 text-left text-3xl font-bold pb-2">
             Virtual Try On
@@ -16,7 +26,6 @@ const Page = () => {
           </p>
           <Button className="bg-[#96816f] mt-2">Try On</Button>
         </div>
-        {/* Right Side - Image */}
         <div className="w-1/2 flex justify-center">
           <Image
             src="/hero.webp"
@@ -26,7 +35,7 @@ const Page = () => {
             className="rounded-lg shadow-lg"
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,15 +1,66 @@
 "use client";
 import { handleSignUp, loginWithGithub, loginWithGoogle } from "@/actions/auth";
-import { Eye, EyeOffIcon } from "lucide-react";
-import React, { useRef, useState } from "react";
+// import { Eye, EyeOffIcon } from "lucide-react";
+import React, { useRef, useState, useTransition } from "react";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SignUpSchema } from "@/schemas";
+import { z } from "zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
+import { Eye, EyeOff } from "lucide-react";
 
 const LoginPage = () => {
+  // const [hidePassword, setHidePassword] = useState(true);
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const [hidePassword, setHidePassword] = useState(true);
-  const handleTooglePasswordVisibility = () => {
+  const [isPending, startTransition] = useTransition();
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  const form = useForm<z.infer<typeof SignUpSchema>>({
+    resolver: zodResolver(SignUpSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleTogglePasswordVisibility = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent button from stealing focus
     setHidePassword((prev) => !prev);
-    // passwordRef.current?.focus();
+    // Use setTimeout to ensure focus is set after state update
+    setTimeout(() => {
+      if (passwordRef.current) {
+        passwordRef.current.focus();
+        // Optionally, move cursor to end of input
+        const length = passwordRef.current.value.length;
+        passwordRef.current.setSelectionRange(length, length);
+      }
+    }, 0);
   };
-  const passwordRef = useRef(null);
+
+  const handleCredentialSignUp = (values: z.infer<typeof SignUpSchema>) => {
+    setError("");
+    setSuccess("");
+    startTransition(() => {
+      handleSignUp(values).then((result) => {
+        setError(result.error);
+        setSuccess(result.success);
+      });
+    });
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
@@ -75,77 +126,110 @@ const LoginPage = () => {
           <div className="border-t border-gray-300 flex-grow"></div>
         </div>
 
-        <form action={handleSignUp}>
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              User Name
-            </label>
-            <input
-              type="name"
-              name="name"
-              id="name"
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
-              placeholder="Enter your username"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
-              placeholder="Enter your email"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-            <div className="relative">
-              <input
-                ref={passwordRef}
-                type={hidePassword ? "password" : "text"}
-                id="password"
-                name="password"
-                className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
-                placeholder="Enter your password"
-              />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 px-3 text-gray-500"
-                onClick={handleTooglePasswordVisibility}
-              >
-                {hidePassword ? <Eye size={20} /> : <EyeOffIcon size={20} />}
-              </button>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-green-600 text-white px-4 py-2 rounded-md shadow hover:bg-green-700"
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(() =>
+              handleCredentialSignUp(form.getValues())
+            )}
+            className="space-y-3"
           >
-            Sign Up
-          </button>
-          <p className="text-center mt-4">
-            Already have a account?{" "}
-            <a href="/signup" className="font-semibold underline">
-              Click here
-            </a>{" "}
-          </p>
-        </form>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="name"
+                      name="name"
+                      id="name"
+                      placeholder="Enter your name"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="Enter your email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        disabled={isPending}
+                        {...field}
+                        type={hidePassword ? "password" : "text"}
+                        name="password"
+                        id="password"
+                        placeholder="Enter your Password"
+                        className="pr-10"
+                        ref={passwordRef} // Attach ref to the input
+                      />
+                      <button
+                        type="button"
+                        onClick={handleTogglePasswordVisibility}
+                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700"
+                        disabled={isPending}
+                        aria-label={
+                          hidePassword ? "Show password" : "Hide password"
+                        }
+                      >
+                        {hidePassword ? (
+                          <Eye className="h-5 w-5" />
+                        ) : (
+                          <EyeOff className="h-5 w-5" />
+                        )}
+                      </button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {error ? <FormError message={error} /> : null}
+
+            {success ? <FormSuccess message={success} /> : null}
+            <Button
+              type="submit"
+              variant="default"
+              className="w-full bg-primary-700 text-white px-4 py-2 rounded-md shadow hover:bg-primary-600"
+            >
+              Sign UP
+            </Button>
+            <p className="text-center mt-4">
+              Already have a account?{" "}
+              <a href="/login" className="font-semibold underline">
+                Click here
+              </a>{" "}
+            </p>
+          </form>
+        </Form>
       </div>
     </div>
   );

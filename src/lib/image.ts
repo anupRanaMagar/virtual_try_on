@@ -1,13 +1,10 @@
 export const personExampleImage = [
-  "/model1.jpg",
-  "/model2.jpg",
-  "/model3.jpg",
-  "/model4.jpg",
-  "/model5.jpg",
-  "/model6.jpg",
-  "/model7.jpg",
-  "/model8.jpg",
-  "/model9.jpg",
+  "/00891_00.jpg",
+  "/03615_00.jpg",
+  "/07445_00.jpg",
+  "/07573_00.jpg",
+  "/08909_00.jpg",
+  "/10549_00.jpg",
 ];
 export const clotheExampleImage = [
   "/clothe1.jpg",
@@ -16,7 +13,7 @@ export const clotheExampleImage = [
   "/clothe4.jpg",
   "/clothe5.jpg",
   "/clothe6.jpg",
-  "/clothe7.jpg",
-  "/clothe8.jpg",
-  "/clothe9.jpg",
+  // "/clothe7.jpg",
+  // "/clothe8.jpg",
+  // "/clothe9.jpg",
 ];

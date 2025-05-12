@@ -3,6 +3,7 @@ import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import FooterSection from "./landing/FooterSection";
+import { Suspense } from "react";
 
 const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
@@ -23,11 +24,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${robotoMono.className} antialiased`}>
         <div className="h-full w-full">
-          <Navbar />
-          <main className={`h-full flex w-full flex-col pt-[52px] `}>
-            {children}
-          </main>
-          <FooterSection />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Navbar />
+            <main className={`h-full flex w-full flex-col pt-[52px] `}>
+              {children}
+            </main>
+            <FooterSection />
+          </Suspense>
         </div>
       </body>
     </html>

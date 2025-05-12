@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -32,13 +33,12 @@ const HeroSection = () => {
             real time, and find your perfect look without ever stepping into a
             store!
           </p>
-          <div className="flex justify-center">
-            <Button
-              onClick={() => {}}
-              className="bg-secondary-500 text-white rounded-xl border-none hover:bg-secondary-600 h-12"
-            >
-              Try On Now
-            </Button>
+          <div className="">
+            <Link href="/login">
+              <Button className="bg-secondary-500 text-white rounded-xl border-none hover:bg-secondary-600 h-12">
+                Try On Now
+              </Button>
+            </Link>
           </div>
         </div>
       </motion.div>

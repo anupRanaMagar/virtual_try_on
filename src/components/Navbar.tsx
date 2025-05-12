@@ -60,6 +60,7 @@ const Navbar = async () => {
             <div className="flex items-center gap-5">
               <Link href="/login">
                 <Button
+                  asChild
                   variant="outline"
                   className="text-white border-white bg-transparent hover:bg-white hover:text-primary-700 rounded-lg"
                 >
@@ -68,6 +69,7 @@ const Navbar = async () => {
               </Link>
               <Link href="/signup">
                 <Button
+                  asChild
                   variant="secondary"
                   className="text-white bg-secondary-600 hover:bg-white hover:text-primary-700 rounded-lg"
                 >

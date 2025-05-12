@@ -78,6 +78,7 @@ const NewVerificationForm = () => {
         <div className="flex justify-center">
           <Link href="/login">
             <Button
+              asChild
               disabled={isLoading}
               className="w-full max-w-xs bg-primary-700 hover:bg-primary-600 text-white transition-colors"
             >
@@ -87,7 +88,6 @@ const NewVerificationForm = () => {
         </div>
       </div>
 
-      {/* Optional CSS for Animation */}
       <style jsx>{`
         .animate-fade-in {
           animation: fadeIn 0.5s ease-in-out;

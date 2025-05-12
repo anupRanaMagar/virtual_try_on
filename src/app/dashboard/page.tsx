@@ -148,7 +148,7 @@ const Page = () => {
     }
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/tryon", {
+      const res = await fetch("http://127.0.0.0c:8000/tryon", {
         method: "POST",
         body: formData,
       });
@@ -159,8 +159,7 @@ const Page = () => {
       const imageUrl = URL.createObjectURL(blob);
       setOutputImage(imageUrl);
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred during the try-on process");
+      alert("Please upload the image from the example");
     } finally {
       setIsLoading(false);
     }

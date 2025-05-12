@@ -6,10 +6,6 @@ import { users, verificationTokens } from "@/drizzle/schema";
 import { getVerificationTokenByToken } from "@/data/verification-token";
 import { getUserByEmail } from "@/data/user";
 
-export const tryOn = async () => {
-  console.log("Trying on clothe");
-};
-
 export const saltAndHashPassword = async (password: string) => {
   const hashPassword = await bcrypt.hash(password, 10);
   return hashPassword;

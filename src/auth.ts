@@ -67,8 +67,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ user, account }) {
       //Allow OAuth without email verification
       // console.log(user, account);
-      console.log("USER", user);
-      console.log("ACCOUNT", account);
+
       if (account?.provider == "google" || account?.provider == "github")
         return true;
       const exisitingUser = await getUserById(user.id as string);

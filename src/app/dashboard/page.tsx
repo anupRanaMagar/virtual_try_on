@@ -158,6 +158,7 @@ const Page = () => {
       const blob = await res.blob();
       const imageUrl = URL.createObjectURL(blob);
       setOutputImage(imageUrl);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       alert("Please upload the image from the example");
     } finally {
